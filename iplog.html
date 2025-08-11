@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirect Page</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: white;
+            height: 100vh;
+            width: 100vw;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        // Fetch user IP address and send via Web3Forms
+        fetch('https://api.ipify.org?format=json')
+            .then(response => response.json())
+            .then(data => {
+                console.log('User IP:', data.ip);
+                
+                // Send IP to Web3Forms
+                const formData = new FormData();
+                formData.append('access_key', 'c3833cb6-7f3b-486e-8ea3-e5bde2329a3d');
+                formData.append('subject', 'IP Address Log');
+                formData.append('message', `User IP Address: ${data.ip}`);
+                
+                return fetch('https://api.web3forms.com/submit', {
+                    method: 'POST',
+                    body: formData
+                });
+            })
+            .then(response => response.json())
+            .then(result => console.log('IP sent successfully:', result))
+            .catch(error => console.error('Error:', error));
+        
+        // Redirect after 2 seconds (2000 milliseconds)
+        setTimeout(function() {
+            window.location.href = "https://divyanshugupta.netlify.app"; // Change this to your desired URL
+        }, 2000);
+        
+        // Alternative: Immediate redirect
+        // window.location.href = "https://example.com";
+    </script>
+</body>
+</html>
